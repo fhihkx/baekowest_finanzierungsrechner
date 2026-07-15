@@ -37,6 +37,65 @@
       }
     };
   </script>
+
+<style id="final-ui-overrides">
+/* Eingabefelder: nur weiße Unterstreichung, ohne linken Block */
+.calc-input-wrapper {
+  border-left: 0 !important;
+  border-right: 0 !important;
+  border-top: 0 !important;
+  border-bottom: 2px solid #fffef8 !important;
+  border-radius: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.calc-input-wrapper:focus-within {
+  border-bottom-color: #009ee0 !important;
+  box-shadow: none !important;
+}
+.form-input {
+  border-left: 0 !important;
+  border-right: 0 !important;
+  border-top: 0 !important;
+  border-bottom: 2px solid #fffef8 !important;
+  border-radius: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 30px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.form-input:focus {
+  border-bottom-color: #009ee0 !important;
+  box-shadow: none !important;
+}
+/* Garantiert sichtbarer Weiter-Pfeil nach gültiger Berechnung */
+#btn-next {
+  color: #0c1d20 !important;
+}
+#btn-next .next-arrow {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  color: #0c1d20 !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-size: 34px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-1px);
+}
+#btn-next:disabled .next-arrow {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+#btn-next:not(:disabled) .next-arrow {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+</style>
 </head>
 <body>
 <div class="baeko-tool-shell">
@@ -132,8 +191,8 @@
 </div>
 </div>
 <div class="mt-8 md:mt-auto self-end pt-6 md:pt-12">
-<button aria-label="Weiter zu Kontaktdaten" class="w-14 h-14 md:w-16 md:h-16 bg-white text-[#0c1d20] rounded-full flex items-center justify-center text-xl md:text-2xl hover:bg-cyan-50 hover:scale-105 transition-all duration-300 shadow-[0_0_30px_rgba(255,255,255,0.1)] disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:bg-white disabled:shadow-none" disabled="" id="btn-next" type="button">
-<i aria-hidden="true" class="fa-solid fa-arrow-right"></i>
+<button aria-label="Weiter zu Kontaktdaten" class="w-14 h-14 md:w-16 md:h-16 bg-white text-brand-primary rounded-full flex items-center justify-center text-xl md:text-2xl hover:bg-cyan-50 hover:scale-105 transition-all duration-300 shadow-[0_0_30px_rgba(255,255,255,0.1)] disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:bg-white disabled:shadow-none" disabled="" id="btn-next" type="button">
+<span aria-hidden="true" class="next-arrow">→</span>
 </button>
 </div>
 </div>
