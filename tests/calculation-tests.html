@@ -1,0 +1,17 @@
+<!doctype html><html lang="de"><meta charset="utf-8"><title>BÄKO Faktor-Tests</title><body><pre id="out"></pre><script type="module">
+import { calculateRate, getPriceBand, getAvailableDurationsForPrice, getAvailableResiduals } from "../js/calculator.js";
+const results=[]; const t=(name,ok)=>results.push({name,ok:!!ok});
+t("25.000 gehört Band 1", getPriceBand("25.000,00")==="1-25000");
+t("25.000,01 gehört Band 2", getPriceBand("25.000,01")==="25000-100000");
+t("100.000 gehört Band 2", getPriceBand("100.000,00")==="25000-100000");
+t("100.000,01 gehört Band 3", getPriceBand("100.000,01")==="100000+");
+t("Band 1 / 10% / 36 = 3,03", calculateRate({price:"10.000",duration:"36",residual:"10"}).factor===3.03);
+t("Band 1 / 0% / 36 ungültig", !calculateRate({price:"10.000",duration:"36",residual:"0"}).valid);
+t("Band 2 / 0% / 84 = 1,54", calculateRate({price:"50.000",duration:"84",residual:"0"}).factor===1.54);
+t("Band 2 blendet 36 und 96 aus", !getAvailableDurationsForPrice("50.000").includes("36") && !getAvailableDurationsForPrice("50.000").includes("96"));
+t("Band 3 / 10% / 96 = 1,28", calculateRate({price:"150.000",duration:"96",residual:"10"}).factor===1.28);
+t("Band 3 / 20% / 84 ungültig", !calculateRate({price:"150.000",duration:"84",residual:"20"}).valid);
+t("Band 3 / 84 bietet 0 und 10", JSON.stringify(getAvailableResiduals("150.000","84"))===JSON.stringify(["0","10"]));
+document.getElementById("out").textContent=results.map(r=>`${r.ok?'PASS':'FAIL'} ${r.name}`).join("\n");
+if(results.some(r=>!r.ok)) throw new Error("Berechnungstests fehlgeschlagen");
+</script></body></html>

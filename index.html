@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+
+<html lang="de">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com data:; img-src 'self' data: blob:; connect-src 'self' https://api.emailjs.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'; upgrade-insecure-requests;" http-equiv="Content-Security-Policy"/><meta content="camera=(), microphone=(), geolocation=(), payment=(), usb=()" http-equiv="Permissions-Policy"/>
+<title>BÄKO WEST Finanzierungsrechner</title>
+<meta content="strict-origin-when-cross-origin" name="referrer"/>
+<meta content="noindex,nofollow" name="robots"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script defer="" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="./css/styles.css?v=baekowest-secure-20260715" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              primary: '#C4944E',
+              primaryHover: '#009ee0',
+              dark: '#009ee0',
+              text: '#FFFEF8',
+              light: '#0c1d20',
+              border: 'rgba(255,254,248,0.05)'
+            }
+          },
+          fontFamily: {
+            sans: ['Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
+            heading: ['Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif']
+          },
+          boxShadow: {
+            card: '0 28px 55px -18px rgba(17, 17, 17, 0.18)'
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body>
+<div class="baeko-tool-shell">
+<section aria-label="BÄKO WEST Finanzierungsrechner" class="baeko-tool-header">
+<div class="baeko-header-copy">
+<h1 class="tool-title">Investitionen für Backbetriebe <br/><span>smart finanzieren</span></h1>
+</div>
+<img alt="BÄKO WEST" class="baeko-logo" src="./assets/baekowest-logo-transparent-clean.png"/>
+</section>
+<main class="w-full max-w-6xl mx-auto px-4 md:px-6 pb-12 relative z-10">
+<div class="flex justify-center mb-10 md:mb-14">
+<div aria-label="Rechner-Bereiche" class="tab-nav" role="tablist">
+<button aria-controls="view-calculator" aria-selected="true" class="tab-btn active" data-tab="calculator" id="tab-calculator" role="tab" type="button">Rechner</button>
+<button aria-controls="view-why" aria-selected="false" class="tab-btn" data-tab="why" id="tab-why" role="tab" type="button">Vorteile</button>
+<button aria-controls="view-compare" aria-selected="false" class="tab-btn" data-tab="compare" id="tab-compare" role="tab" type="button">Leasing vs. Mietkauf</button>
+</div>
+</div>
+<div class="relative w-full" id="content-container">
+<section aria-labelledby="tab-calculator" class="view-content active-view" id="view-calculator" role="tabpanel">
+<div class="bg-white rounded-2xl md:rounded-3xl shadow-card overflow-hidden border border-slate-100/70 relative group">
+<div class="calc-step active-step" id="calc-step-1">
+<div class="w-full lg:w-7/12 p-6 sm:p-8 md:p-12 lg:p-16 flex flex-col justify-start">
+<div class="flex items-center justify-between mb-8 md:mb-10 h-auto md:h-10">
+<h2 class="text-2xl md:text-3xl lg:text-4xl font-black text-brand-primary tracking-tight m-0">Finanzierung berechnen</h2>
+</div>
+<div class="space-y-8 md:space-y-10 w-full">
+<div>
+<label class="calc-label" for="price">Anschaffungspreis (Netto)</label>
+<div class="calc-input-wrapper">
+<span aria-hidden="true" class="text-slate-300 font-light mr-3 text-2xl">€</span>
+<input autocomplete="off" class="calc-input text-xl md:text-2xl" id="price" inputmode="decimal" maxlength="15" placeholder="Anschaffungspreis (Netto)" type="text"/>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-10">
+<div>
+<label class="calc-label" for="duration">Laufzeit</label>
+<div class="calc-input-wrapper relative">
+<select class="calc-input text-lg md:text-xl cursor-pointer" id="duration">
+<option disabled="" selected="" value="">Bitte wählen</option>
+<option value="36">36 Monate</option>
+<option value="48">48 Monate</option>
+<option value="60">60 Monate</option>
+<option value="72">72 Monate</option>
+<option value="84">84 Monate</option>
+<option value="96">96 Monate</option>
+</select>
+<span aria-hidden="true" class="select-icon"><i class="fa-solid fa-chevron-down text-sm"></i></span>
+</div>
+</div>
+<div>
+<label class="calc-label" for="residual">Restwert</label>
+<div class="calc-input-wrapper relative">
+<select class="calc-input text-lg md:text-xl cursor-pointer" id="residual">
+<option disabled="" selected="" value="">Bitte wählen</option>
+<option value="0">0 %</option>
+<option value="10">10 %</option>
+<option value="20">20 %</option>
+</select>
+<span aria-hidden="true" class="select-icon"><i class="fa-solid fa-chevron-down text-sm"></i></span>
+</div>
+</div>
+</div>
+<div class="pt-4 md:pt-6">
+<button class="w-full py-4 bg-brand-primary text-white font-bold rounded-xl text-sm md:text-base uppercase tracking-widest hover:bg-brand-primaryHover transition-all duration-300 shadow-[0_12px_24px_-12px_rgba(196,148,78,0.55)] hover:-translate-y-1 flex justify-center items-center gap-3" id="calculate-btn" type="button">
+                      Rate berechnen
+</button>
+</div>
+<div aria-live="polite" class="hidden p-4 rounded-lg bg-cyan-50 border border-cyan-100 flex items-start gap-4 text-sky-700 text-sm font-medium" id="error-msg">
+<i aria-hidden="true" class="fa-solid fa-circle-exclamation text-xl mt-0.5"></i>
+<span id="error-text">Diese Kombination ist aktuell nicht verfügbar.</span>
+</div>
+</div>
+</div>
+<aside class="w-full lg:w-5/12 bg-brand-dark p-6 sm:p-8 md:p-12 lg:p-16 text-white flex flex-col justify-start relative overflow-hidden">
+
+<div class="relative z-10 flex flex-col h-full">
+<div class="flex items-center mb-6 md:mb-8 h-auto md:h-10">
+<div class="offer-kicker">Unverbindliches Angebot</div>
+</div>
+<div class="space-y-6 md:space-y-8 w-full flex-grow flex flex-col">
+<div class="pt-2 md:pt-4">
+<div class="text-[11px] md:text-[12px] font-bold tracking-[0.15em] uppercase text-slate-400 mb-2 md:mb-4">Monatliche Rate</div>
+<div class="flex items-baseline gap-2">
+<output class="text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter break-words text-white leading-none origin-left inline-block" id="result-display">0,00</output>
+<div class="text-2xl md:text-3xl font-light text-slate-400">€</div>
+</div>
+</div>
+<div class="grid grid-cols-1 gap-6 pt-6 md:pt-8 mt-6 md:mt-8 border-t border-slate-700">
+<div>
+<div class="text-[11px] md:text-[12px] font-bold tracking-[0.1em] uppercase text-slate-500 mb-2">Hinweis</div>
+<p class="text-[11px] md:text-[12px] text-slate-400 leading-relaxed font-light">*Alle Preise zzgl. gesetzlicher MwSt. vorbehaltlich positiver Bonitätsprüfung durch unsere Finanzierungspartner.</p>
+</div>
+</div>
+</div>
+<div class="mt-8 md:mt-auto self-end pt-6 md:pt-12">
+<button aria-label="Weiter zu Kontaktdaten" class="w-14 h-14 md:w-16 md:h-16 bg-white text-brand-primary rounded-full flex items-center justify-center text-xl md:text-2xl hover:bg-cyan-50 hover:scale-105 transition-all duration-300 shadow-[0_0_30px_rgba(255,255,255,0.1)] disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:bg-white disabled:shadow-none" disabled="" id="btn-next" type="button">
+<i aria-hidden="true" class="fa-solid fa-arrow-right"></i>
+</button>
+</div>
+</div>
+</aside>
+</div>
+<div class="calc-step hidden-step" id="calc-step-2">
+<div class="w-full lg:w-7/12 p-6 sm:p-8 md:p-12 lg:p-16 flex flex-col justify-start">
+<div class="flex items-center mb-4 h-auto md:h-10">
+<h2 class="text-2xl md:text-3xl lg:text-4xl font-black text-brand-primary m-0 tracking-tight">Ihre Kontaktdaten</h2>
+</div>
+<p class="text-slate-500 mb-8 md:mb-10 text-sm md:text-base font-light">Bitte geben Sie Ihre Daten ein, um das unverbindliche Angebot als PDF zu erhalten.</p>
+<form class="space-y-5 md:space-y-6 w-full" id="contact-form" novalidate="">
+<input aria-hidden="true" autocomplete="off" class="honeypot" name="website" tabindex="-1" type="text"/>
+<div>
+<label class="calc-label" for="form-finanzierungsart">Finanzierungsart</label>
+<div class="relative">
+<select class="form-input" id="form-finanzierungsart" required="">
+<option disabled="" selected="" value="">Wählen</option>
+<option value="Leasing">Leasing</option>
+<option value="Mietkauf">Mietkauf</option>
+</select>
+<span aria-hidden="true" class="select-icon"><i class="fa-solid fa-chevron-down text-sm"></i></span>
+</div>
+</div>
+<div>
+<label class="calc-label" for="form-anrede">Anrede</label>
+<div class="relative">
+<select class="form-input" id="form-anrede" required="">
+<option disabled="" selected="" value="">Wählen</option>
+<option value="Frau">Frau</option>
+<option value="Herr">Herr</option>
+</select>
+<span aria-hidden="true" class="select-icon"><i class="fa-solid fa-chevron-down text-sm"></i></span>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-6">
+<div>
+<label class="calc-label" for="form-vorname">Vorname</label>
+<input autocomplete="given-name" class="form-input" id="form-vorname" maxlength="50" placeholder="Vorname" required="" type="text"/>
+</div>
+<div>
+<label class="calc-label" for="form-nachname">Nachname</label>
+<input autocomplete="family-name" class="form-input" id="form-nachname" maxlength="50" placeholder="Nachname" required="" type="text"/>
+</div>
+</div>
+<div>
+<label class="calc-label" for="form-firma">Firmenname</label>
+<input autocomplete="organization" class="form-input" id="form-firma" maxlength="100" placeholder="Firma" required="" type="text"/>
+</div>
+<div>
+<label class="calc-label" for="form-strasse">Adresse &amp; Hausnummer</label>
+<input autocomplete="street-address" class="form-input" id="form-strasse" maxlength="150" placeholder="Adresse &amp; Hausnummer" required="" type="text"/>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-5 md:gap-6">
+<div class="sm:col-span-1">
+<label class="calc-label" for="form-plz">Postleitzahl</label>
+<input autocomplete="postal-code" class="form-input" id="form-plz" inputmode="numeric" maxlength="10" placeholder="Postleitzahl" required="" type="text"/>
+</div>
+<div class="sm:col-span-2">
+<label class="calc-label" for="form-ort">Ort</label>
+<input autocomplete="address-level2" class="form-input" id="form-ort" maxlength="100" placeholder="Ort" required="" type="text"/>
+</div>
+</div><div class="grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-6">
+<div>
+<label class="calc-label" for="form-email">E-Mail</label>
+<input autocomplete="email" class="form-input" id="form-email" maxlength="120" placeholder="E-Mail" required="" type="email"/>
+</div>
+<div>
+<label class="calc-label" for="form-telefon">Telefon</label>
+<input autocomplete="tel" class="form-input" id="form-telefon" maxlength="40" placeholder="Telefon" type="tel"/>
+</div>
+</div>
+<div aria-live="polite" class="hidden p-4 rounded-lg bg-cyan-50 border border-cyan-100 text-orange-800 text-sm font-medium" id="submit-security-msg" role="alert"></div><div class="pt-4 md:pt-6">
+<button class="w-full bg-brand-primary text-white font-bold py-4 rounded-xl text-sm md:text-base uppercase tracking-widest hover:bg-brand-primaryHover transition-all duration-300 shadow-[0_12px_24px_-12px_rgba(196,148,78,0.55)] hover:-translate-y-1 flex justify-center items-center gap-3" id="submit-btn" type="submit">
+<span>Angebot erstellen</span>
+<i aria-hidden="true" class="fa-solid fa-file-pdf"></i>
+</button>
+</div>
+</form>
+</div>
+<aside class="w-full lg:w-5/12 bg-brand-dark p-6 sm:p-8 md:p-12 lg:p-16 text-white flex flex-col justify-start relative overflow-hidden">
+
+<div class="relative z-10 flex flex-col h-full step2-summary-layout">
+<div class="flex items-center mb-6 md:mb-8 h-auto md:h-10">
+<h3 class="font-black tracking-tight text-2xl md:text-3xl m-0">Zusammenfassung</h3>
+</div>
+<dl class="space-y-4 md:space-y-5 text-sm font-light">
+<div class="summary-row"><dt>Anschaffungspreis</dt><dd id="summary-price">0,00 €</dd></div>
+<div class="summary-row"><dt>Laufzeit</dt><dd><span id="summary-duration">0</span> Monate</dd></div>
+<div class="summary-row"><dt>Anzahlung</dt><dd>0,00 €</dd></div>
+<div class="summary-row"><dt>Restwert</dt><dd id="summary-residual-euro">0,00 €</dd></div>
+<div class="summary-row"><dt>Leasingfaktor</dt><dd id="summary-leasing-factor">0,00 %</dd></div>
+</dl>
+<div class="summary-rate-block">
+<div class="text-slate-400 text-[11px] font-bold tracking-[0.15em] uppercase mb-2 md:mb-4">Monatliche Rate</div>
+<div class="flex items-baseline gap-2">
+<output class="text-5xl md:text-6xl font-black tracking-tighter text-white" id="summary-rate">0,00</output>
+<div class="text-2xl font-light text-slate-400">€</div>
+</div>
+</div>
+<div class="step2-back-wrap">
+<button class="back-outline-btn" id="back-btn" type="button">
+<i aria-hidden="true" class="fa-solid fa-arrow-left"></i> Zurück
+                    </button>
+</div>
+</div>
+</aside>
+</div>
+</div>
+</section>
+<section aria-hidden="true" aria-labelledby="tab-why" class="view-content hidden-view" hidden="" id="view-why" inert="" role="tabpanel">
+<div class="cheat-card rounded-2xl md:rounded-3xl shadow-card border border-slate-100 overflow-hidden">
+<div class="cheat-head">
+<div>
+<p class="cheat-kicker">Kurzüberblick für Kundentermine</p>
+<h2>Vorteile der Finanzierung</h2>
+</div>
+</div>
+<div class="benefit-brief">
+<div class="benefit-main">
+<h3>Finanzierung als zusätzliche Zahlungsoption</h3>
+<p>Die Investition wird auf feste Monatsraten verteilt. So kann notwendige Maschinen, Ladenbau und weitere Betriebsausstattung angeschafft werden, ohne den gesamten Kaufpreis sofort einzusetzen.</p>
+</div>
+<div aria-label="Vorteile" class="benefit-points">
+<div><strong>Liquidität</strong><span>Verfügbares Kapital bleibt für laufende Ausgaben und weitere Investitionen erhalten.</span></div>
+<div><strong>Planbarkeit</strong><span>Feste Monatsraten erleichtern Budgetierung, Freigabe und Kostenkontrolle.</span></div>
+<div><strong>Umsetzung</strong><span>Modernisierungen, Maschinenkäufe und Ladenbauprojekte können zeitnah realisiert werden.</span></div>
+<div><strong>Einordnung</strong><span>Die berechnete Rate ist unverbindlich; Konditionen hängen von Objekt, Laufzeit und Bonität ab.</span></div>
+</div>
+</div>
+</div>
+</section>
+<section aria-hidden="true" aria-labelledby="tab-compare" class="view-content hidden-view" hidden="" id="view-compare" inert="" role="tabpanel">
+<div class="cheat-card rounded-2xl md:rounded-3xl shadow-card border border-slate-100 overflow-hidden">
+<div class="cheat-head">
+<div>
+<p class="cheat-kicker">Sachlicher Direktvergleich</p>
+<h2>Leasing vs. Mietkauf</h2>
+</div>
+</div>
+<div class="comparison-table-wrap">
+<table class="comparison-table">
+<thead>
+<tr><th scope="col">Thema</th><th scope="col">Leasing</th><th scope="col">Mietkauf</th></tr>
+</thead>
+<tbody>
+<tr><th scope="row">Grundidee</th><td>Nutzung der Ausstattung über eine feste Laufzeit gegen monatliche Raten.</td><td>Finanzierung mit dem Ziel des vollständigen Erwerbs.</td></tr>
+<tr><th scope="row">Eigentum während der Laufzeit</th><td>Das Objekt bleibt im Eigentum der Leasinggesellschaft.</td><td>Das Objekt wird wirtschaftlich dem Mietkäufer zugerechnet.</td></tr>
+<tr><th scope="row">Übernahme</th><td><strong>Ziel ist die Übernahme des Objekts zum Laufzeitende.</strong> Die Übernahme erfolgt entsprechend der vertraglichen Vereinbarung.</td><td>Mit Zahlung der letzten Rate geht das Eigentum vollständig auf den Mietkäufer über.</td></tr>
+<tr><th scope="row">Bilanzierung</th><td>In der Regel keine Aktivierung beim Leasingnehmer.</td><td>Aktivierung im Anlagevermögen des Unternehmens.</td></tr>
+<tr><th scope="row">Steuerliche Behandlung</th><td>Leasingraten können in der Regel als laufende Betriebsausgaben berücksichtigt werden.</td><td>Abschreibung nach der jeweils geltenden AfA-Tabelle.</td></tr>
+<tr><th scope="row">Passt, wenn</th><td>Liquidität geschont werden soll und eine spätere Übernahme geplant ist.</td><td>Die Ausstattung dauerhaft im Unternehmen verbleiben und bilanziert werden soll.</td></tr>
+<tr><th scope="row">Kurz erklärt</th><td>„Heute nutzen, in festen Raten zahlen und das Objekt am Laufzeitende übernehmen.“</td><td>„In Raten finanzieren und mit der letzten Rate Eigentümer werden.“</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</div>
+</main>
+</div>
+<script src="./js/main.js?v=baekowest-secure-20260715" type="module"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<!doctype html><meta charset="utf-8"><title>Security smoke tests</title><pre id="out"></pre><script type="module">
+import { parseGermanNumber, validatePrice } from "../js/calculator.js";
+import { validateContactForm, cleanText } from "../js/validation.js";
+const results=[]; const t=(name,ok)=>results.push({name,ok:!!ok});
+t("German number", parseGermanNumber("12.345,67")===12345.67);
+t("Reject script chars", !cleanText("<script>x</script>").includes("<script>"));
+const valid=validateContactForm({financingType:"Leasing",salutation:"Herr",firstName:"Max",lastName:"Mustermann",company:"BÄKO WEST GmbH",street:"Musterstr. 1",postalCode:"47877",city:"Willich",email:"max@example.de",phone:"0203 123456"});
+t("Valid contact", valid.valid);
+const invalid=validateContactForm({financingType:"Leasing",salutation:"Herr",firstName:"Max",lastName:"Mustermann",company:"BÄKO WEST GmbH",street:"Musterstr. 1",postalCode:"47877",city:"Willich",email:"invalid",phone:""});
+t("Reject invalid email", !invalid.valid && !!invalid.errors.email);
+t("Reject huge price", !validatePrice("999999999999").valid);
+document.getElementById("out").textContent=results.map(r=>`${r.ok?'PASS':'FAIL'} ${r.name}`).join("\n"); console.table(results);
+</script>

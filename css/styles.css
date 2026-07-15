@@ -1,0 +1,1082 @@
+:root {
+  --brand-primary: #C4944E;
+  --brand-primary-hover: #0090DF;
+  --brand-dark: #273F22;
+  --brand-text: #0C1D21;
+  --brand-light: #FFFEF8;
+  --brand-border: rgba(255,254,248,0.05);
+  --brand-black: #111111;
+  --brand-grey: #777b7f;
+  --brand-orange-soft: #fff4e9;
+  --slate-50: #fafafa;
+  --slate-100: #eeeeee;
+  --slate-400: #8c9196;
+  --slate-500: #62676c;
+  --slate-600: #474c51;
+  --slate-700: #353a3f;
+  --slate-900: #181b1f;
+  --shadow-card: 0 28px 55px -18px rgba(17, 17, 17, 0.18);
+  --shadow-tab: 0 12px 28px -14px rgba(17, 17, 17, 0.22);
+  --shadow-active-tab: 0 10px 22px rgba(196, 148, 78, 0.25);
+  --font-main: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.bg-brand-primary { background-color: var(--brand-primary); }
+.bg-brand-primaryHover { background-color: var(--brand-primary-hover); }
+.bg-brand-dark { background-color: var(--brand-dark); }
+.text-brand-primary { color: var(--brand-primary); }
+.text-brand-dark { color: var(--brand-dark); }
+.hover\:bg-brand-primaryHover:hover { background-color: var(--brand-primary-hover); }
+.hover\:text-brand-primary:hover { color: var(--brand-primary); }
+.shadow-card { box-shadow: var(--shadow-card); }
+
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: var(--font-main);
+  background: var(--brand-light);
+  color: var(--brand-text);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+h1, h2, h3, h4, .font-heading { font-family: var(--font-main); letter-spacing: -0.025em; }
+button, input, select, textarea { font: inherit; }
+input, select, textarea, button { -webkit-appearance: none; -moz-appearance: none; appearance: none; outline: none; }
+button { cursor: pointer; }
+button:disabled { cursor: not-allowed; }
+a, button, input, select, textarea { -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 3px solid rgba(196, 148, 78, 0.38); outline-offset: 3px; }
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes numberPop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+.animate-fade-in-up { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.animate-number-pop { animation: numberPop 0.25s ease-out forwards; }
+
+.baeko-tool-shell {
+  min-height: 100vh;
+  padding: 32px 16px 52px;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(196, 148, 78, 0.11), transparent 34%),
+    linear-gradient(180deg, #ffffff 0%, var(--brand-light) 46%, #f1f1f1 100%);
+}
+.baeko-tool-header {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto 26px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+}
+.baeko-logo {
+  height: 76px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  mix-blend-mode: multiply;
+}
+.baeko-mark {
+  width: 148px;
+  height: 148px;
+  object-fit: contain;
+  opacity: .96;
+}
+.tool-kicker {
+  color: var(--brand-primary);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  margin: 0 0 10px;
+}
+.tool-title {
+  margin: 0;
+  color: var(--brand-dark);
+  font-size: clamp(38px, 5vw, 68px);
+  font-weight: 900;
+  line-height: .98;
+  letter-spacing: -0.045em;
+}
+.tool-title span { color: var(--brand-primary); }
+.tool-subtitle {
+  max-width: 680px;
+  margin: 18px 0 0;
+  color: var(--slate-500);
+  font-size: clamp(15px, 1.7vw, 19px);
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+.tab-nav {
+  width: 100%;
+  max-width: 900px;
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px;
+  background: #fff;
+  border: 1px solid var(--brand-border);
+  border-radius: 14px;
+  box-shadow: var(--shadow-tab);
+}
+.tab-btn {
+  flex: 1;
+  min-width: 0;
+  padding: 14px 10px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--slate-500);
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  white-space: nowrap;
+  transition: color .35s ease, background-color .35s ease, box-shadow .35s ease, transform .35s ease;
+}
+.tab-btn:hover:not(.active) { color: var(--brand-primary); background: var(--brand-orange-soft); }
+.tab-btn.active { color: #fff; background: var(--brand-primary); box-shadow: var(--shadow-active-tab); transform: translateY(-2px); }
+
+#content-container { position: relative; width: 100%; min-height: 1px; }
+.view-content { width: 100%; }
+.active-view { display: block; opacity: 1; pointer-events: auto; }
+.hidden-view { display: none !important; opacity: 0; pointer-events: none; }
+
+.calc-step { width: 100%; }
+.calc-step.active-step, .active-step { display: flex; flex-direction: column; animation: fadeInUp 0.5s ease-out forwards; }
+.calc-step.hidden-step, .hidden-step { display: none !important; }
+
+.calc-label {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--slate-400);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.calc-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  background: transparent;
+  border-bottom: 2px solid var(--brand-border);
+  transition: border-color .3s ease;
+}
+.calc-input-wrapper:focus-within { border-bottom-color: var(--brand-primary); }
+.calc-input, .form-input { width: 100%; margin: 0; border: 0; background: transparent; color: var(--slate-900); line-height: 1.5; }
+.calc-input { padding: 0; font-size: 20px; font-weight: 800; }
+.form-input {
+  padding: 12px 0;
+  border-bottom: 2px solid var(--brand-border);
+  font-size: 16px;
+  font-weight: 700;
+  transition: border-color .3s ease, background-color .3s ease;
+}
+.form-input:focus { border-bottom-color: var(--brand-primary); }
+select.calc-input, select.form-input { padding-right: 30px; cursor: pointer; text-overflow: ellipsis; }
+.select-icon { position: absolute; top: 50%; right: 0; color: var(--brand-primary); pointer-events: none; transform: translateY(-50%); }
+.input-error { border-bottom-color: #ef4444 !important; background-color: #fff7ed !important; }
+.honeypot { position: absolute !important; left: -9999px !important; width: 1px !important; height: 1px !important; opacity: 0 !important; }
+
+.summary-row { display: flex; justify-content: space-between; gap: 20px; padding-bottom: 14px; border-bottom: 1px solid rgba(148, 163, 184, 0.22); }
+.summary-row dt { color: var(--slate-400); }
+.summary-row dd { margin: 0; color: #fff; font-weight: 800; letter-spacing: .025em; text-align: right; }
+
+.benefit-card, .compare-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 32px;
+  border: 1px solid var(--slate-100);
+  border-radius: 16px;
+  background: var(--slate-50);
+  transition: transform .45s ease, box-shadow .45s ease, background-color .45s ease, border-color .45s ease;
+}
+.benefit-card:hover, .compare-card:hover { background: #fff; border-color: rgba(196, 148, 78, .35); box-shadow: 0 20px 35px -18px rgba(15, 23, 42, .35); transform: translateY(-4px); }
+.benefit-icon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  border-radius: 16px;
+  background: #fff;
+  color: var(--brand-primary);
+  font-size: 20px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, .06);
+  transition: color .45s ease, background-color .45s ease;
+}
+.benefit-card:hover .benefit-icon, .compare-card:hover .benefit-icon { color: #fff; background: var(--brand-primary); }
+.benefit-card h3, .compare-card h3 { margin: 0; color: var(--brand-dark); font-weight: 800; letter-spacing: -0.02em; }
+.benefit-card h3 { margin-bottom: 12px; font-size: 20px; }
+.compare-card h3 { margin-bottom: 24px; font-size: 24px; }
+.benefit-card p { margin: 0; color: var(--slate-500); font-size: 14px; font-weight: 300; line-height: 1.65; }
+.compare-card ul { margin: auto 0 0; padding: 0; list-style: none; }
+.compare-card li { display: flex; align-items: flex-start; gap: 12px; margin-top: 16px; color: var(--slate-600); font-size: 14px; font-weight: 300; line-height: 1.65; }
+.compare-card li:first-child { margin-top: 0; }
+.compare-card li i { margin-top: 5px; color: var(--brand-primary); }
+
+@media (min-width: 640px) { .tab-btn { font-size: 16px; } }
+@media (min-width: 768px) {
+  .benefit-card, .compare-card { padding: 40px; }
+  .benefit-icon { width: 64px; height: 64px; margin-bottom: 32px; font-size: 24px; }
+  .benefit-card:hover { transform: translateY(-8px); }
+  .benefit-card h3 { margin-bottom: 16px; font-size: 24px; }
+  .benefit-card p, .compare-card li { font-size: 16px; }
+  .compare-card h3 { margin-bottom: 32px; font-size: 30px; }
+  .compare-card li { margin-top: 20px; }
+}
+@media (min-width: 1024px) { .calc-step.active-step, .active-step { flex-direction: row; } }
+@media (max-width: 768px) {
+  .baeko-tool-header { flex-direction: column; align-items: flex-start; }
+  .baeko-mark { width: 118px; height: 118px; }
+  .tab-nav { flex-direction: column; width: 100%; }
+  .tab-btn { width: 100%; padding: 14px; font-size: 15px; white-space: normal; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+}
+
+
+/* Internal sales cheat-sheet pages */
+.cheat-card {
+  background: #fff;
+  position: relative;
+}
+.cheat-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 8px;
+  background: linear-gradient(180deg, var(--brand-primary), #ffb15f);
+}
+.cheat-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 34px 40px 28px 48px;
+  border-bottom: 1px solid var(--brand-border);
+  background:
+    linear-gradient(135deg, rgba(196,148,78,.10), transparent 36%),
+    #fff;
+}
+.cheat-kicker {
+  margin: 0 0 8px;
+  color: var(--brand-primary);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.cheat-head h2 {
+  margin: 0;
+  color: var(--brand-dark);
+  font-size: clamp(30px, 4vw, 48px);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1.02;
+}
+.cheat-badge {
+  flex: none;
+  border: 1px solid rgba(196,148,78,.28);
+  background: var(--brand-orange-soft);
+  color: var(--brand-primary);
+  border-radius: 999px;
+  padding: 9px 13px;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.cheat-grid {
+  padding: 34px 40px 24px 48px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 18px;
+}
+.cheat-note {
+  border: 1px solid var(--brand-border);
+  background: #fafafa;
+  border-radius: 18px;
+  padding: 22px 22px 20px;
+  min-height: 150px;
+  box-shadow: 0 10px 26px -24px rgba(17,17,17,.35);
+}
+.cheat-note.accent-orange {
+  background: var(--brand-orange-soft);
+  border-color: rgba(196,148,78,.30);
+}
+.cheat-note.accent-dark {
+  background: var(--brand-dark);
+  border-color: var(--brand-dark);
+  color: #fff;
+}
+.cheat-note h3 {
+  margin: 0 0 10px;
+  color: inherit;
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: -0.025em;
+}
+.cheat-note p {
+  margin: 0;
+  color: inherit;
+  opacity: .82;
+  font-size: 15px;
+  line-height: 1.55;
+  font-weight: 400;
+}
+.talk-track {
+  margin: 0 40px 40px 48px;
+  padding: 24px;
+  border-radius: 20px;
+  background: #f4f4f4;
+  border: 1px solid #e4e4e4;
+}
+.talk-track h3,
+.quick-tip strong {
+  color: var(--brand-dark);
+}
+.talk-track h3 {
+  margin: 0 0 14px;
+  font-size: 21px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+.talk-track ol {
+  margin: 0;
+  padding-left: 20px;
+  display: grid;
+  gap: 8px;
+  color: var(--slate-600);
+  line-height: 1.55;
+}
+.t-account {
+  margin: 34px 40px 28px 48px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--brand-border);
+  border-radius: 22px;
+  overflow: hidden;
+  background: #fff;
+}
+.t-side {
+  padding: 30px 30px 34px;
+}
+.t-side + .t-side {
+  border-left: 2px solid var(--brand-primary);
+}
+.t-side h3 {
+  margin: 0 0 22px;
+  color: var(--brand-dark);
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+}
+.t-side dl {
+  margin: 0;
+  display: grid;
+  gap: 0;
+}
+.t-side dl > div {
+  display: grid;
+  grid-template-columns: 118px 1fr;
+  gap: 18px;
+  padding: 14px 0;
+  border-top: 1px solid #ececec;
+}
+.t-side dt {
+  color: var(--brand-primary);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+.t-side dd {
+  margin: 0;
+  color: var(--slate-600);
+  font-size: 15px;
+  line-height: 1.45;
+}
+.quick-tip {
+  margin: 0 40px 40px 48px;
+  padding: 18px 20px;
+  border-radius: 18px;
+  background: var(--brand-orange-soft);
+  border: 1px solid rgba(196,148,78,.25);
+  color: var(--slate-600);
+  line-height: 1.55;
+}
+@media (max-width: 860px) {
+  .cheat-head { flex-direction: column; padding: 28px 26px 24px 34px; }
+  .cheat-grid { grid-template-columns: 1fr; padding: 26px 26px 20px 34px; }
+  .talk-track, .quick-tip { margin-left: 34px; margin-right: 26px; }
+  .t-account { grid-template-columns: 1fr; margin-left: 34px; margin-right: 26px; }
+  .t-side + .t-side { border-left: 0; border-top: 2px solid var(--brand-primary); }
+  .t-side dl > div { grid-template-columns: 1fr; gap: 5px; }
+}
+
+/* Step 2: align contact submit button and summary controls */
+.step2-summary-layout {
+  min-height: 100%;
+}
+.summary-rate-block {
+  margin-top: 2.25rem;
+}
+.step2-back-wrap {
+  margin-top: 2.25rem;
+}
+.back-outline-btn {
+  width: 100%;
+  min-height: 56px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  border: 2px solid rgba(255,255,255,0.95);
+  border-radius: 0.75rem;
+  background: transparent;
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: background-color .3s ease, color .3s ease, transform .3s ease;
+}
+.back-outline-btn:hover {
+  background: #ffffff;
+  color: var(--brand-primary);
+  transform: translateY(-1px);
+}
+.back-outline-btn:active {
+  transform: translateY(0);
+}
+
+@media (min-width: 1024px) {
+  .summary-rate-block {
+    margin-top: 2.75rem;
+  }
+  .step2-back-wrap {
+    margin-top: 2.6rem;
+  }
+}
+
+/* Final refinements requested: cleaner internal sheets, no orange side strip/badges */
+.cheat-card::before { display: none !important; }
+.cheat-badge { display: none !important; }
+.cheat-head {
+  padding-left: 40px !important;
+  background: #fff !important;
+}
+.cheat-kicker {
+  color: #777 !important;
+}
+
+/* Vorteile: less generic, more like a compact internal reference */
+.benefit-brief {
+  padding: 34px 40px 28px;
+  display: grid;
+  grid-template-columns: 0.92fr 1.35fr;
+  gap: 34px;
+  align-items: start;
+}
+.benefit-main {
+  padding: 0 28px 0 0;
+  border-right: 1px solid rgba(255,254,248,0.05);
+}
+.benefit-main h3 {
+  margin: 0 0 12px;
+  color: var(--brand-dark);
+  font-size: 28px;
+  line-height: 1.05;
+  font-weight: 900;
+  letter-spacing: -0.035em;
+}
+.benefit-main p {
+  margin: 0;
+  color: var(--slate-600);
+  font-size: 16px;
+  line-height: 1.65;
+  font-weight: 350;
+}
+.benefit-points {
+  display: grid;
+  gap: 0;
+}
+.benefit-points > div {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 22px;
+  padding: 16px 0;
+  border-top: 1px solid #e9e9e9;
+}
+.benefit-points > div:first-child { border-top: 0; padding-top: 0; }
+.benefit-points strong {
+  color: var(--brand-primary);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+.benefit-points span {
+  color: var(--slate-600);
+  font-size: 15px;
+  line-height: 1.5;
+}
+.benefit-note {
+  margin: 0 40px 40px;
+  padding: 18px 20px;
+  border-radius: 14px;
+  background: #f5f5f5;
+  border: 1px solid #e3e3e3;
+  color: var(--slate-600);
+  line-height: 1.55;
+  font-size: 15px;
+}
+.benefit-note strong { color: var(--brand-dark); }
+
+/* Leasing vs. Mietkauf: T-account without surrounding box; only middle divider */
+.t-account {
+  margin: 34px 40px 40px !important;
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  overflow: visible !important;
+  background: transparent !important;
+}
+.t-side {
+  padding: 0 34px 0 0 !important;
+}
+.t-side + .t-side {
+  border-left: 2px solid #d9d9d9 !important;
+  padding: 0 0 0 34px !important;
+}
+.t-side h3 {
+  font-size: 34px !important;
+  margin-bottom: 24px !important;
+}
+.t-side dl > div {
+  grid-template-columns: 112px 1fr !important;
+  padding: 14px 0 !important;
+}
+.quick-tip { display: none !important; }
+
+/* Step 2: move monthly-rate/back-button block down so the back button aligns with Angebot erstellen */
+@media (min-width: 1024px) {
+  .summary-rate-block {
+    margin-top: 6.25rem !important;
+  }
+  .step2-back-wrap {
+    margin-top: 3.9rem !important;
+  }
+}
+
+@media (max-width: 860px) {
+  .cheat-head { padding-left: 26px !important; }
+  .benefit-brief {
+    grid-template-columns: 1fr;
+    padding: 28px 26px 22px;
+    gap: 24px;
+  }
+  .benefit-main {
+    padding-right: 0;
+    border-right: 0;
+    border-bottom: 1px solid rgba(255,254,248,0.05);
+    padding-bottom: 22px;
+  }
+  .benefit-points > div {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  .benefit-note { margin-left: 26px; margin-right: 26px; }
+  .t-account { grid-template-columns: 1fr !important; margin-left: 26px !important; margin-right: 26px !important; }
+  .t-side { padding: 0 0 24px !important; }
+  .t-side + .t-side { border-left: 0 !important; border-top: 2px solid #d9d9d9 !important; padding: 24px 0 0 !important; }
+}
+
+
+/* Secure edition: Step 2 summary stays visible; rate and back button align at the bottom */
+.step2-summary-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+.summary-rate-block {
+  margin-top: auto !important;
+  padding-top: 2.25rem;
+}
+.step2-back-wrap {
+  margin-top: 2rem !important;
+}
+
+/* Sachlicher Tabellenvergleich */
+.comparison-table-wrap {
+  padding: 34px 40px 42px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.comparison-table {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: collapse;
+  background: #fff;
+  color: var(--slate-600);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.comparison-table th,
+.comparison-table td {
+  padding: 15px 18px;
+  border-bottom: 1px solid #e5e5e5;
+  vertical-align: top;
+  text-align: left;
+}
+.comparison-table thead th {
+  background: var(--brand-dark);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.comparison-table thead th:first-child { width: 24%; }
+.comparison-table tbody th {
+  color: var(--brand-primary);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  background: #fafafa;
+}
+.comparison-table tbody tr:last-child th,
+.comparison-table tbody tr:last-child td { border-bottom: 0; }
+.comparison-table td strong { color: var(--brand-dark); }
+
+@media (max-width: 680px) {
+  .comparison-table-wrap { padding: 24px 20px 30px; }
+  .comparison-table { min-width: 680px; font-size: 13px; }
+  .comparison-table th, .comparison-table td { padding: 13px 14px; }
+}
+
+/* BÄKO WEST CI refinements */
+body { background: #FFFEF8; }
+.baeko-tool-shell { background: linear-gradient(180deg,#FFFEF8 0%,#f3f1e9 100%); }
+.baeko-tool-header { background:#FFFEF8; border-bottom:1px solid rgba(12,29,33,.10); }
+.baeko-logo { width:min(320px,55vw); height:auto; object-fit:contain; }
+.baeko-mark { width:170px; height:110px; object-fit:contain; opacity:.95; }
+.tool-title span { color:#C4944E; }
+.tab-nav { background:#0C1D21; border-color:rgba(255,254,248,.08); box-shadow:0 10px 25px -5px rgba(12,29,33,.25); }
+.tab-btn { color:rgba(255,254,248,.72); }
+.tab-btn:hover:not(.active) { color:#FFFEF8; background:#273F22; }
+.tab-btn.active { background:#C4944E; color:#FFFEF8; box-shadow:0 8px 20px rgba(196,148,78,.35); }
+.bg-brand-dark { background-color:#273F22 !important; }
+.text-brand-primary { color:#C4944E !important; }
+.bg-brand-primary { background-color:#C4944E !important; }
+.hover\:bg-brand-primaryHover:hover { background-color:#0090DF !important; }
+.select-icon { color:#C4944E; }
+.calc-input-wrapper:focus-within,.form-input:focus { border-bottom-color:#C4944E; }
+.cheat-kicker { color:#C4944E; }
+.comparison-table thead th { background:#0C1D21; color:#FFFEF8; }
+.comparison-table tbody th { color:#273F22; }
+@media(max-width:768px){.baeko-tool-header{align-items:center}.baeko-mark{width:130px;height:84px}}
+
+/* 2026-07-15: compact header logo, only top right */
+.baeko-tool-header{
+  align-items:flex-start !important;
+  justify-content:space-between !important;
+  gap:32px !important;
+}
+.baeko-header-copy{flex:1;min-width:0;}
+.baeko-logo{
+  width:118px !important;
+  height:auto !important;
+  max-height:142px !important;
+  object-fit:contain !important;
+  mix-blend-mode:normal !important;
+  flex:0 0 auto;
+  margin-top:4px;
+}
+.baeko-mark{display:none !important;}
+@media(max-width:768px){
+  .baeko-tool-header{flex-direction:row !important;align-items:flex-start !important;}
+  .baeko-logo{width:78px !important;max-height:96px !important;}
+  .tool-title{font-size:clamp(30px,9vw,48px) !important;}
+}
+
+/* ===== BÄKO WEST visual refinement 2026-07-15 ===== */
+:root {
+  --brand-primary: #C4944E;
+  --brand-primary-hover: #009ee0;
+  --brand-dark: #009ee0;
+  --brand-text: #FFFEF8;
+  --brand-light: #0c1d20;
+  --brand-border: rgba(255,254,248,0.16);
+  --field-bg: #0c1d20;
+  --field-text: #FFFEF8;
+  --field-muted: rgba(255,254,248,0.62);
+}
+
+html, body {
+  background: #0c1d20 !important;
+  color: #FFFEF8;
+}
+
+.baeko-tool-shell {
+  min-height: 100vh;
+  padding: 64px 16px 56px; /* doubled top spacing */
+  background: #0c1d20 !important;
+}
+
+.baeko-tool-header {
+  max-width: 1120px;
+  margin-bottom: 40px;
+  align-items: flex-start;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.baeko-header-copy,
+.tool-title,
+.tool-title span {
+  border: 0 !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+}
+
+.tool-title {
+  color: #FFFEF8;
+}
+.tool-title span { color: #009ee0; }
+
+.baeko-logo {
+  height: 62px;
+  width: 62px;
+  max-width: 62px;
+  object-fit: contain;
+  object-position: center;
+  mix-blend-mode: normal;
+  flex: 0 0 62px;
+}
+
+.tab-nav {
+  background: #0c1d20;
+  border-color: rgba(255,254,248,.16);
+  box-shadow: 0 12px 28px -18px rgba(0,0,0,.75);
+}
+.tab-btn { color: rgba(255,254,248,.68); }
+.tab-btn:hover:not(.active) { color: #FFFEF8; background: rgba(0,158,224,.14); }
+.tab-btn.active { background: #009ee0; color: #FFFEF8; box-shadow: 0 8px 20px rgba(0,158,224,.3); }
+
+/* Tool cards and both calculator columns */
+#view-calculator > div,
+#calc-step-1 > div:first-child,
+#calc-step-2 > div:first-child,
+.cheat-card,
+.cheat-head,
+.cheat-note,
+.t-account,
+.t-side {
+  background: #0c1d20 !important;
+  color: #FFFEF8 !important;
+  border-color: rgba(255,254,248,.12) !important;
+}
+
+#calc-step-1 > aside,
+#calc-step-2 > aside,
+.bg-brand-dark {
+  background: #009ee0 !important;
+}
+
+#calc-step-1 h2,
+#calc-step-2 h2,
+.cheat-head h2,
+.benefit-main h3,
+.t-side h3 {
+  color: #009ee0 !important;
+}
+
+#calc-step-1 > aside h3,
+#calc-step-2 > aside h3 { color: #FFFEF8 !important; }
+
+#calc-step-2 p,
+.cheat-note p,
+.benefit-main p,
+.benefit-points dd,
+.t-side dd,
+.talk-track,
+.quick-tip { color: rgba(255,254,248,.76) !important; }
+
+/* Contact-form-like controls from baekowest.de */
+.calc-label {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0,0,0,0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.calc-input-wrapper,
+.form-input {
+  min-height: 66px;
+  background: #0c1d20 !important;
+  color: #FFFEF8 !important;
+  border: 0 !important;
+  border-left: 10px solid #FFFEF8 !important;
+  border-bottom: 2px solid #FFFEF8 !important;
+  border-radius: 10px 10px 10px 10px !important;
+  box-shadow: none !important;
+  transition: border-color .25s ease, background-color .25s ease, box-shadow .25s ease;
+}
+
+.calc-input-wrapper {
+  padding: 0 22px;
+}
+
+.form-input {
+  padding: 18px 22px !important;
+}
+
+.calc-input-wrapper:focus-within,
+.form-input:focus {
+  border-left-color: #009ee0 !important;
+  border-bottom-color: #009ee0 !important;
+  box-shadow: 0 0 0 2px rgba(0,158,224,.16) !important;
+}
+
+.calc-input,
+.form-input,
+.calc-input option,
+.form-input option {
+  color: #FFFEF8 !important;
+  background: #0c1d20 !important;
+}
+
+.calc-input::placeholder,
+.form-input::placeholder {
+  color: rgba(255,254,248,.62) !important;
+  opacity: 1;
+  font-weight: 400;
+}
+
+.calc-input { font-weight: 500; }
+.form-input { font-weight: 500; }
+.select-icon { right: 20px; color: #FFFEF8 !important; }
+
+/* maintain spacing for select wrappers in step 2 */
+#contact-form .relative:has(> select.form-input) {
+  border-radius: 10px;
+}
+
+.summary-row { border-color: rgba(255,254,248,.28); }
+.summary-row dt { color: rgba(255,254,248,.72); }
+
+.back-outline-btn {
+  border-color: #FFFEF8;
+  color: #FFFEF8;
+}
+.back-outline-btn:hover { background: #FFFEF8; color: #009ee0; }
+
+@media (max-width: 768px) {
+  .baeko-tool-shell { padding-top: 44px; }
+  .baeko-tool-header { flex-direction: row; align-items: flex-start; }
+  .baeko-logo { height: 52px; width: 52px; flex-basis: 52px; }
+}
+
+
+/* ===== Final BÄKO WEST refinements: flat buttons, white solution text, dark cheat sheets ===== */
+
+/* Header is fully transparent; logo has no white bitmap background */
+.baeko-tool-header,
+.baeko-header-copy {
+  background: transparent !important;
+}
+.baeko-logo {
+  width: 54px !important;
+  height: auto !important;
+  max-width: 54px !important;
+  max-height: 88px !important;
+  object-fit: contain !important;
+  background: transparent !important;
+  mix-blend-mode: normal !important;
+}
+
+/* No glow, floating or lift effects on buttons */
+button,
+.btn,
+.tab-btn,
+#calculate-btn,
+#submit-btn,
+#btn-next,
+.back-outline-btn {
+  box-shadow: none !important;
+  filter: none !important;
+}
+button:hover,
+.btn:hover,
+.tab-btn:hover,
+#calculate-btn:hover,
+#submit-btn:hover,
+#btn-next:hover,
+.back-outline-btn:hover {
+  box-shadow: none !important;
+  filter: none !important;
+  transform: none !important;
+}
+.tab-btn.active { box-shadow: none !important; transform: none !important; }
+
+/* Result / solution columns: every visible text element is white */
+#calc-step-1 > aside,
+#calc-step-2 > aside,
+#calc-step-1 > aside *,
+#calc-step-2 > aside * {
+  color: #FFFEF8 !important;
+}
+#calc-step-1 > aside .summary-row,
+#calc-step-2 > aside .summary-row {
+  border-color: rgba(255,254,248,.38) !important;
+}
+.offer-kicker {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  color: #FFFEF8;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .15em;
+  line-height: 1.3;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+/* Vorteile: dark, borderless, fully white typography */
+#view-why .cheat-card,
+#view-why .cheat-head,
+#view-why .benefit-brief,
+#view-why .benefit-main,
+#view-why .benefit-points,
+#view-why .benefit-points > div {
+  background: #0c1d20 !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+#view-why *,
+#view-why .cheat-kicker,
+#view-why .cheat-head h2,
+#view-why .benefit-main h3,
+#view-why .benefit-main p,
+#view-why .benefit-points dt,
+#view-why .benefit-points dd {
+  color: #FFFEF8 !important;
+}
+#view-why .benefit-main { border-right-color: rgba(0,158,224,.75) !important; }
+#view-why .benefit-points > div { border-top-color: rgba(0,158,224,.75) !important; }
+
+/* Leasing vs. Mietkauf: remove white card, white text, blue separators */
+#view-compare .cheat-card,
+#view-compare .cheat-head,
+#view-compare .comparison-table-wrap,
+#view-compare .comparison-table,
+#view-compare .comparison-table thead,
+#view-compare .comparison-table tbody,
+#view-compare .comparison-table tr,
+#view-compare .comparison-table th,
+#view-compare .comparison-table td {
+  background: #0c1d20 !important;
+  box-shadow: none !important;
+}
+#view-compare .cheat-card,
+#view-compare .comparison-table-wrap {
+  border: 0 !important;
+}
+#view-compare *,
+#view-compare .cheat-kicker,
+#view-compare .cheat-head h2,
+#view-compare .comparison-table th,
+#view-compare .comparison-table td,
+#view-compare .comparison-table strong {
+  color: #FFFEF8 !important;
+}
+#view-compare .comparison-table th,
+#view-compare .comparison-table td {
+  border-color: #009ee0 !important;
+}
+#view-compare .comparison-table thead th {
+  border-bottom: 2px solid #009ee0 !important;
+}
+#view-compare .comparison-table tbody tr + tr th,
+#view-compare .comparison-table tbody tr + tr td {
+  border-top: 1px solid #009ee0 !important;
+}
+#view-compare .comparison-table th + th,
+#view-compare .comparison-table td + td {
+  border-left: 1px solid #009ee0 !important;
+}
+
+@media (max-width: 768px) {
+  .baeko-logo {
+    width: 46px !important;
+    max-width: 46px !important;
+    max-height: 74px !important;
+  }
+}
+
+
+/* ===== Final polish 2026-07-15 ===== */
+
+/* Vorteile: extend the blue vertical divider through the full content height. */
+#view-why .benefit-brief {
+  align-items: stretch !important;
+}
+#view-why .benefit-main {
+  align-self: stretch !important;
+  min-height: 100% !important;
+}
+
+/* Leasing vs. Mietkauf: only horizontal blue separators, no vertical rules. */
+#view-compare .comparison-table th + th,
+#view-compare .comparison-table td + td {
+  border-left: 0 !important;
+}
+
+/* Keep the circular next control visible, but reveal its arrow only after a valid calculation. */
+#btn-next i {
+  opacity: 1;
+  transition: opacity .2s ease;
+}
+#btn-next:disabled i {
+  opacity: 0 !important;
+}
+
+/* Supplied BÄKO WEST logo: transparent artwork with white lettering. */
+.baeko-logo {
+  object-fit: contain !important;
+  object-position: center !important;
+}
+
+@media (max-width: 860px) {
+  #view-why .benefit-main {
+    min-height: 0 !important;
+  }
+}
