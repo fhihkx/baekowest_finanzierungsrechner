@@ -1080,3 +1080,54 @@ button:hover,
     min-height: 0 !important;
   }
 }
+/* BÄKO WEST – feste Buttonfarbe ohne Overlay oder Farbverfälschung */
+#calculate-btn,
+#submit-btn {
+  position: relative;
+  isolation: isolate;
+
+  background: #a69243 !important;
+  background-color: #a69243 !important;
+  background-image: none !important;
+
+  border-color: #a69243 !important;
+  color: #fffef8 !important;
+
+  opacity: 1 !important;
+  filter: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  mix-blend-mode: normal !important;
+}
+
+
+#calculate-btn::before,
+#calculate-btn::after,
+#submit-btn::before,
+#submit-btn::after {
+  content: none !important;
+  display: none !important;
+  background: transparent !important;
+  opacity: 0 !important;
+
+#calculate-btn > *,
+#submit-btn > * {
+  position: relative;
+  z-index: 1;
+  background: transparent !important;
+  color: inherit !important;
+  filter: none !important;
+}
+
+
+#calculate-btn:hover,
+#submit-btn:hover {
+  background: #009ee0 !important;
+  background-color: #009ee0 !important;
+  background-image: none !important;
+  border-color: #009ee0 !important;
+
+  filter: none !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
