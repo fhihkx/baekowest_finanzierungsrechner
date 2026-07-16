@@ -1,32 +1,34 @@
 import { formatCurrency } from "./calculator.js";
 
+
 const EMAILJS_CONFIG = Object.freeze({
   publicKey: "8TINjTh9gJ09Ett0t",
   serviceId: "service_nn8cgva",
   templateId: "template_ib9hcc9",
 });
 
+const EMAILJS_RATE_LIMIT_MS = 15_000;
+const EMAILJS_RATE_LIMIT_ID = "baekowest-finanzierungsrechner";
+
 let initialized = false;
 
 export function initEmailService() {
   if (initialized) return true;
 
-  if (!window.emailjs) {
+  assertEmailJsConfig();
+
+  if (!window.emailjs || typeof window.emailjs.init !== "function") {
     throw new Error(
-      "Das EmailJS-SDK wurde nicht geladen. Prüfe den Script-Tag und die Content-Security-Policy."
+      "Das EmailJS-SDK wurde nicht geladen. Prüfen Sie den Script-Tag und die Content-Security-Policy."
     );
   }
-
-  assertConfigValue("Public Key", EMAILJS_CONFIG.publicKey);
-  assertConfigValue("Service ID", EMAILJS_CONFIG.serviceId);
-  assertConfigValue("Template ID", EMAILJS_CONFIG.templateId);
 
   window.emailjs.init({
     publicKey: EMAILJS_CONFIG.publicKey,
     blockHeadless: true,
     limitRate: {
-      id: "baekowest-finanzierungsrechner",
-      throttle: 10000,
+      id: EMAILJS_RATE_LIMIT_ID,
+      throttle: EMAILJS_RATE_LIMIT_MS,
     },
   });
 
@@ -48,44 +50,30 @@ export async function sendOfferEmail({ customer, calculation }) {
   const templateParams = buildTemplateParams(customer, calculation);
 
   try {
-    const response = await window.emailjs.send(
+    return await window.emailjs.send(
       EMAILJS_CONFIG.serviceId,
       EMAILJS_CONFIG.templateId,
       templateParams,
-      {
-        publicKey: EMAILJS_CONFIG.publicKey,
-      }
+      { publicKey: EMAILJS_CONFIG.publicKey }
     );
-
-    console.info(
-      "[EmailJS] Versand erfolgreich:",
-      response.status,
-      response.text
-    );
-
-    return response;
   } catch (error) {
     const status = error?.status ?? "unbekannt";
-    const text =
+    const message =
       error?.text ??
       error?.message ??
       "EmailJS hat keine genaue Fehlermeldung geliefert.";
 
-    console.error("[EmailJS] Versand fehlgeschlagen:", {
-      status,
-      text,
-      error,
-      templateParams,
-    });
+    console.error(`[EmailJS] Versand fehlgeschlagen (${status}): ${message}`);
 
-    throw new Error(`EmailJS-Fehler ${status}: ${text}`);
+    const wrappedError = new Error(`EmailJS-Fehler ${status}: ${message}`);
+    wrappedError.cause = error;
+    wrappedError.status = status;
+    throw wrappedError;
   }
 }
 
 function buildTemplateParams(customer, calculation) {
-  const fullName =
-    `${customer.firstName ?? ""} ${customer.lastName ?? ""}`.trim();
-
+  const fullName = `${customer.firstName ?? ""} ${customer.lastName ?? ""}`.trim();
   const address = [
     customer.street,
     [customer.postalCode, customer.city].filter(Boolean).join(" "),
@@ -97,44 +85,54 @@ function buildTemplateParams(customer, calculation) {
     ? `${String(calculation.factor).replace(".", ",")} %`
     : "-";
 
-  return {
-    name_vollstaendig: fullName,
-    firma: customer.company ?? "-",
-    adresse: address || "-",
-    email: customer.email ?? "-",
-    telefon: customer.phone ?? "-",
+  const timestamp = new Intl.DateTimeFormat("de-DE", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  }).format(new Date());
 
-    finanzierungsart: customer.financingType ?? "-",
+  return {
+    // Empfänger-/Absenderbezug
+    to_name: "BÄKO WEST eG",
+    from_name: fullName || customer.company || "Interessent",
+    reply_to: customer.email || "",
+
+    // Kundendaten – ohne doppelte Alias-Felder
+    name_vollstaendig: fullName || "-",
+    firma: customer.company || "-",
+    adresse: address || "-",
+    email: customer.email || "-",
+    telefon: customer.phone || "-",
+
+    // Kalkulation
+    finanzierungsart: customer.financingType || "-",
     anschaffungspreis: `${formatCurrency(calculation.price)} €`,
     laufzeit: `${calculation.duration} Monate`,
     restwert: `${formatCurrency(calculation.residualValue)} €`,
     leasingfaktor: factor,
     monatliche_rate: `${formatCurrency(calculation.rate)} €`,
 
-    timestamp: new Intl.DateTimeFormat("de-DE", {
-      dateStyle: "medium",
-      timeStyle: "short",
-    }).format(new Date()),
-
+    // Metadaten
+    timestamp,
     page_url: window.location.href,
   };
 }
 
-function assertConfigValue(label, value) {
-  const invalidValues = [
-    "",
-    "xxx",
-    "DEIN_PUBLIC_KEY",
-    "DEINE_SERVICE_ID",
-    "DEINE_TEMPLATE_ID",
-  ];
+function assertEmailJsConfig() {
+  assertConfigValue("Public Key", EMAILJS_CONFIG.publicKey, ["DEIN_PUBLIC_KEY"]);
+  assertConfigValue("Service ID", EMAILJS_CONFIG.serviceId, ["DEINE_SERVICE_ID"]);
+  assertConfigValue("Template ID", EMAILJS_CONFIG.templateId, ["DEINE_TEMPLATE_ID"]);
+}
 
-  if (
-    typeof value !== "string" ||
-    invalidValues.includes(value.trim()) ||
-    value.includes("HIER_") ||
-    value.includes("DEIN_")
-  ) {
+function assertConfigValue(label, value, placeholders = []) {
+  const normalized = typeof value === "string" ? value.trim() : "";
+  const invalid =
+    !normalized ||
+    normalized === "xxx" ||
+    placeholders.includes(normalized) ||
+    normalized.includes("HIER_") ||
+    normalized.includes("DEIN_");
+
+  if (invalid) {
     throw new Error(`${label} fehlt oder ist noch ein Platzhalter.`);
   }
 }
