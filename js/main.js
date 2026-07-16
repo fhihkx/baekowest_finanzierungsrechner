@@ -131,25 +131,15 @@ function bindForm() {
       generateOfferPdf({ customer: validation.values, calculation: state.calculation });
 
       // Mailversand läuft unsichtbar für den Nutzer. Fehler werden nur intern geloggt.
-   try {
-  const response = await sendOfferEmail({
+try {
+  await sendOfferEmail({
     customer: validation.values,
     calculation: state.calculation,
   });
 
-  alert(
-    `E-Mail erfolgreich gesendet.\nStatus: ${response.status} ${response.text}`
-  );
+  console.info("[EmailJS] E-Mail erfolgreich gesendet.");
 } catch (emailError) {
   console.error("[EmailJS] Mailversand fehlgeschlagen:", emailError);
-
-  alert(
-    "Die E-Mail konnte nicht gesendet werden.\n\n" +
-    (emailError?.message || "Unbekannter EmailJS-Fehler") +
-    "\n\nBitte die Browser-Konsole und den Netzwerk-Tab prüfen."
-  );
-
-  throw emailError;
 }
       markSubmissionSuccess();
     } catch (pdfError) {
